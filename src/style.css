@@ -166,7 +166,7 @@ main {
 .history__delete {
     background-color: transparent;
     color: red;
-    padding: 0;
+    padding: 0 7px;
     border-width: 0;
     font-size: 1.25em;
     opacity: 0;
