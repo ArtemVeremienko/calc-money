@@ -7,7 +7,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      transactions: [],
+      transactions: JSON.parse(localStorage.getItem('calcMoney')) || [],
       description: '',
       amount: '',
       resultIncome: 0,
@@ -18,6 +18,15 @@ class App extends React.Component {
     this.addTransaction = this.addTransaction.bind(this);
     this.addAmount = this.addAmount.bind(this);
     this.addDescription = this.addDescription.bind(this);
+    this.deleteTransaction = this.deleteTransaction.bind(this);
+  }
+
+  componentDidMount() {
+    this.getTotalBalance();
+  }
+
+  componentDidUpdate() {
+    this.addStorage();
   }
 
   addTransaction(isAdd) {
@@ -75,7 +84,12 @@ class App extends React.Component {
   }
 
   addStorage() {
+    localStorage.setItem('calcMoney', JSON.stringify(this.state.transactions));
+  }
 
+  deleteTransaction(key) {
+    const transactions = this.state.transactions.filter(item => item.id !== key);
+    this.setState({transactions}, this.getTotalBalance)
   }
 
   render() {
@@ -94,7 +108,10 @@ class App extends React.Component {
                   totalBalance = {this.state.totalBalance}
                 />
 
-                <History transactions={this.state.transactions} />
+                <History 
+                  transactions={this.state.transactions} 
+                  deleteTransaction={this.deleteTransaction}
+                />
 
                 <Operation 
                   addTransaction={this.addTransaction}
