@@ -50,12 +50,10 @@ class App extends React.Component {
   }
 
   addAmount(e) {
-    console.log(e.target.value)
     this.setState({amount: +e.target.value});
   }
 
   addDescription(e) {
-    console.log(e.target.value)
     this.setState({description: e.target.value})
   }
 
