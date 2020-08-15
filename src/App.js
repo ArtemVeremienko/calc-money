@@ -9,7 +9,10 @@ class App extends React.Component {
     this.state = {
       transactions: [],
       description: '',
-      amount: ''
+      amount: '',
+      resultIncome: 0,
+      resultExpenses: 0,
+      totalBalance: 0,
     }
     
     this.addTransaction = this.addTransaction.bind(this);
@@ -32,15 +35,39 @@ class App extends React.Component {
       transactions,
       description: '',
       amount: ''
-    })
+    }, this.getTotalBalance)
   }
 
   addAmount(e) {
-    this.setState({amount: +e.target.value});
+    this.setState({amount: parseFloat(e.target.value)});
   }
 
   addDescription(e) {
     this.setState({description: e.target.value})
+  }
+
+  getIncome() {
+    return this.state.transactions
+      .filter(item => item.isAdd)
+      .reduce((acc, item) => acc + item.amount, 0)
+  }
+
+  getExpenses() {
+    return this.state.transactions
+      .filter(item => !item.isAdd)
+      .reduce((acc, item) => acc + item.amount, 0)
+  }
+
+  getTotalBalance() {
+    const resultIncome = this.getIncome();
+    const resultExpenses = this.getExpenses();
+    const totalBalance = resultIncome - resultExpenses;
+
+    this.setState({
+      resultIncome,
+      resultExpenses,
+      totalBalance
+    })
   }
 
   render() {
@@ -53,7 +80,11 @@ class App extends React.Component {
 
         <main>
             <div className="container">
-                <Total transactions={this.state.transactions} />
+                <Total 
+                  resultIncome = {this.state.resultIncome}
+                  resultExpenses = {this.state.resultExpenses}
+                  totalBalance = {this.state.totalBalance}
+                />
 
                 <History transactions={this.state.transactions} />
 
