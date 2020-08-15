@@ -12,6 +12,7 @@ function Operation({addTransaction, addDescription, addAmount, description, amou
                 placeholder="Наименование операции"
                 onChange={addDescription}
                 value={description}
+                min="0"
               />
           </label>
           <label>
@@ -21,6 +22,7 @@ function Operation({addTransaction, addDescription, addAmount, description, amou
                 placeholder="Введите сумму"
                 onChange={addAmount}
                 value={amount}
+                min="0"
               />
           </label>
           <div className="operation__btns">

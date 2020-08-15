@@ -20,7 +20,9 @@ class App extends React.Component {
     this.addDescription = this.addDescription.bind(this);
   }
 
-  addTransaction(isAdd, ...rest) {
+  addTransaction(isAdd) {
+    if (!this.state.amount || !this.state.description) return; // проверка на отсутствие значений.
+
     const transactions = [
       ...this.state.transactions,
       {
@@ -39,10 +41,12 @@ class App extends React.Component {
   }
 
   addAmount(e) {
-    this.setState({amount: parseFloat(e.target.value)});
+    console.log(e.target.value)
+    this.setState({amount: +e.target.value});
   }
 
   addDescription(e) {
+    console.log(e.target.value)
     this.setState({description: e.target.value})
   }
 
@@ -68,6 +72,10 @@ class App extends React.Component {
       resultExpenses,
       totalBalance
     })
+  }
+
+  addStorage() {
+
   }
 
   render() {
